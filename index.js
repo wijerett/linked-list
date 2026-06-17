@@ -1,66 +1,140 @@
 
+export class Node {
+    constructor(value) {
+        this.value = value;
+        this.nextNode = null;
+    }
 
-
-function linkedList () {
-
+    // value = null;
+    // nextNode = null;
 }
 
-class Node {
-    constructor (value, nextNode) {
-        this.value = value;
-        this.nextNode = nextNode;
+export class LinkedList {
+    constructor () {
+        this.head = null;
+        this.size = 0;
     }
-
-    value = null;
-    nextNode = null;
 
     append(value) {
-        value.appendChild(value);
+        const node = new Node(value);
+        if (!this.head) {
+            this.head = node;
+        } else {
+            let current = this.head;
+            while (current.nextNode) {
+                current = current.nextNode;
+            }
+            current.nextNode = node;
+        }
+        this.size++;
     }
+
 
     prepend(value) {
-        value.prependChild(value);
+        const node = new Node(value);
+        node.nextNode = this.head;
+        this.head = node;
+        this.size++;
     }
 
-    size(value) {
-        return value.length;
+    getSize() {
+        return this.size;
     }
 
-    head(value) {
-        return value.index[1];
+    getHead() {
+        return this.head;
     }
 
-    tail(value) {
-        return value.index[-1];
+    getTail() {
+        let current = this.head;
+        if (!current) return null;
+        while (current.nextNode) {
+            current = current.nextNode;
+        }
+        return current;
     }
 
-    at(value, n) {
-        if (n === null) return "undefined";
-        return value.index[n];
+    at(n) {
+        let current = this.head;
+        let i = 0;
+        while (current) {
+            if (i === n) return current;
+            current = current.nextNode;
+            i++;
+        }
+        return null;
     }
 
-    pop(value, n) {
-        if (n === null) return "undefined";
-        return value.pop(n);
+    pop() {
+        if (!this.head) return null;
+        if (!this.head.nextNode) {
+            const value = this.head.value;
+            this.head = null;
+            this.size--;
+            return value;
+        }
+        let current = this.head;
+        while (current.nextNode.nextNode && current.nextNode.nextNode) {
+            current = current.nextNode;
+        }
+        const value = current.nextNode.value;
+        current.nextNode = null;
+        this.size--;
+        return value;
     }
 
     contains(value, n) {
-        if (value.contains(n)) {
-             return true;
-        } else {
-            return false;
+        let current = this.head;
+        while (current) {
+            if (current.value === value) return true;
+            current = current.nextNode;
         }
+        return false;
     }
 
-    findIndex(value, I) {
-        if (value.index[I] >= 1){
-            return value.index[I][0];
-        } else if (value.index[I] === null){
-            return -1;
+    findIndex(value) {
+        let current = this.head;
+        let index = 0;
+        while (current) {
+            if (current.value === value) return index;
+            current = current.nextNode;
+            index++;
         }
+        return -1;
     }
 
-    toString() {
-        
+    toString(value) {
+        let current = this.head;
+        let result = "";
+        while (current) {
+            result += `(${current.value}) -> `;
+            current = current.nextNode;
+        }
+        return result + "null";
+    }
+
+    insertAt(head, pos, value) {
+
+        if (pos < 1) return head;
+
+        if (pos === 1) {
+            let newNode = new Node(value);
+            newNode.nextNode = head;
+            return newNode;
+        }
+        let curr = this.head;
+
+        for (let i = 1; i < pos -1 && curr !== null; i++) {
+            curr = curr.nextNode;
+        }
+
+        if (curr === null) return head;
+
+        let newNode = new Node(value);
+
+        newNode.nextNode = curr.nextNode;
+        curr.nextNode = newNode;
+        return head;
     }
 }
+
