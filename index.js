@@ -5,8 +5,6 @@ export class Node {
         this.nextNode = null;
     }
 
-    // value = null;
-    // nextNode = null;
 }
 
 export class LinkedList {
@@ -14,6 +12,8 @@ export class LinkedList {
         this.head = null;
         this.size = 0;
     }
+
+    
 
     append(value) {
         const node = new Node(value);
@@ -113,8 +113,13 @@ export class LinkedList {
         return result + "null";
     }
 
-    insertAt(head, pos, value) {
+    insertAt(pos, ...values) {
+        for (let value of values) {
+            this.head = this.insertSingleAt(pos, this.head, value);
+        }
 
+    }
+    insertSingleAt(pos, head, value) {
         if (pos < 1) return head;
 
         if (pos === 1) {
@@ -131,10 +136,8 @@ export class LinkedList {
         if (curr === null) return head;
 
         let newNode = new Node(value);
-
         newNode.nextNode = curr.nextNode;
         curr.nextNode = newNode;
         return head;
     }
 }
-

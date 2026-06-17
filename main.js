@@ -5,15 +5,19 @@ import { LinkedList } from "./index.js";
 import { Node } from "./index.js";
 
 
-const list = new LinkedList();
 
 
-//console.log(list.toString());
+const newlist = new LinkedList();
 
-list.append("1");
-list.append("2");
-list.append("3");
 
-//list.insertAt(1, 10, 11);
+newlist.append("1");
+newlist.append("2");
+newlist.append("3");
 
-console.log(list.toString());
+console.log("Initial:");
+console.log(newlist.toString());
+
+newlist.insertAt(3, 10, 11)
+
+console.log("After insert:");
+console.log(newlist.toString());
